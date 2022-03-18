@@ -1,4 +1,4 @@
-> 基于腾讯词向量和 [Milvus](https://milvus.io/cn/docs) 的相似词搜索服务。
+> 基于腾讯中文词向量和 [Milvus](https://milvus.io/cn/docs) 的相似词搜索服务。
 
 ## 数据下载
 
@@ -6,3 +6,28 @@
 
 ## 服务部署
 
+### 1. 启动 Milvus 单机版
+
+> $ sudo docker-compose up -d
+
+```
+Creating milvus-etcd  ... done
+Creating milvus-minio ... done
+Creating milvus-standalone ... done
+```
+
+如果 Milvus 单机版启动正常，可以看到有 3 个 Docker 容器在运行（2 个为基础服务，1 个为 Milvus 服务）：
+
+> $ sudo docker-compose ps
+
+```
+      Name                     Command                  State                          Ports
+----------------------------------------------------------------------------------------------------------------
+milvus-etcd         etcd -advertise-client-url ...   Up             2379/tcp, 2380/tcp
+milvus-minio        /usr/bin/docker-entrypoint ...   Up (healthy)   9000/tcp
+milvus-standalone   /tini -- milvus run standalone   Up             0.0.0.0:19530->19530/tcp,:::19530->19530/tcp
+```
+
+### 2. 导入腾讯中文词向量
+
+### 3. 启动相似词搜索服务
