@@ -8,7 +8,9 @@
 
 ### 1. 启动 Milvus 单机版
 
-> $ sudo docker-compose up -d
+```
+$ sudo docker-compose up -d
+```
 
 ```
 Creating milvus-etcd  ... done
@@ -18,7 +20,9 @@ Creating milvus-standalone ... done
 
 如果 Milvus 单机版启动正常，可以看到有 3 个 Docker 容器在运行（2 个为基础服务，1 个为 Milvus 服务）：
 
-> $ sudo docker-compose ps
+```
+$ sudo docker-compose ps
+```
 
 ```
       Name                     Command                  State                          Ports
@@ -30,7 +34,9 @@ milvus-standalone   /tini -- milvus run standalone   Up             0.0.0.0:1953
 
 ### 2. 启动相似词搜索服务
 
-> $ docker build -t similar_words:latest .
-> $ docker run -d -p 5000:5000 --name similar_words similar_words:latest
+```
+$ docker build -t similar_words:latest .
+$ docker run -d -p 5000:5000 --name similar_words similar_words:latest
+```
 
 ### 3. 导入腾讯中文词向量
