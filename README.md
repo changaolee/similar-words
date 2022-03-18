@@ -2,7 +2,7 @@
 
 ## 数据下载
 
-[腾讯中文预训练词向量](链接: https://pan.baidu.com/s/1Xud2TTo861hkdvjleDXslg?pwd=qnft)
+[腾讯中文预训练词向量](https://pan.baidu.com/s/1Xud2TTo861hkdvjleDXslg?pwd=qnft)
 
 ## 服务部署
 
