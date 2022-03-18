@@ -40,3 +40,13 @@ $ docker run -d -p 5000:5000 --name similar_words similar_words:latest
 ```
 
 ### 3. 导入腾讯中文词向量
+
+```
+
+```
+
+### 4. 相似词搜索
+
+```
+
+```
