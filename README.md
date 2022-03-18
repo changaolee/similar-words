@@ -28,6 +28,9 @@ milvus-minio        /usr/bin/docker-entrypoint ...   Up (healthy)   9000/tcp
 milvus-standalone   /tini -- milvus run standalone   Up             0.0.0.0:19530->19530/tcp,:::19530->19530/tcp
 ```
 
-### 2. 导入腾讯中文词向量
+### 2. 启动相似词搜索服务
 
-### 3. 启动相似词搜索服务
+> $ docker build -t similar_words:latest .
+> $ docker run -d -p 5000:5000 --name similar_words similar_words:latest
+
+### 3. 导入腾讯中文词向量
