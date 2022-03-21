@@ -44,7 +44,7 @@ class Milvus(object):
         if utility.has_collection(self._collection_name):
             utility.drop_collection(self._collection_name)
             self._load_collection()
-        with open("./Tencent_AILab_ChineseEmbedding.txt", "w", encoding="utf-8") as f:
+        with open("./Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
             for line in f:
                 word, embedding = line.split(" ", 1)
                 embedding = embedding.split()
