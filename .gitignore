@@ -130,4 +130,5 @@ dmypy.json
 
 .idea
 
-volumes
+milvus/db/
+milvus/wal/
