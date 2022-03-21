@@ -48,6 +48,8 @@ class Milvus(object):
             for line in f:
                 word, embedding = line.split(" ", 1)
                 embedding = embedding.split()
+                if len(embedding) != 200:
+                    continue
                 print(word, embedding)
                 break
 
