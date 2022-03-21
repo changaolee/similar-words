@@ -36,13 +36,13 @@ milvus-standalone   /tini -- milvus run standalone   Up             0.0.0.0:1953
 
 ```
 $ docker build -t similar_words:latest .
-$ docker run -d -p 5000:5000 --name similar_words similar_words:latest
+$ docker run -d -p 5000:5000 -v ./:/app/ --name similar_words similar_words:latest
 ```
 
 ### 3. 导入腾讯中文词向量
 
 ```
-
+$ curl 127.0.0.1:5000/init
 ```
 
 ### 4. 相似词搜索
