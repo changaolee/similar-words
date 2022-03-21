@@ -41,19 +41,6 @@ services:
     depends_on:
       - "etcd"
       - "minio"
-    restart: always
-
-  similar_words:
-    container_name: similar_words
-    image: similar_words:latest
-    volumes:
-      - /home/acs/www/similar_words:/app
-      - /home/acs/Tencent_AILab_ChineseEmbedding.txt:/app/Tencent_AILab_ChineseEmbedding.txt
-    links:
-      - standalone
-    depends_on:
-      - "standalone"
-    restart: always
 
 networks:
   default:
