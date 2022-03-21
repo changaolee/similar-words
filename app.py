@@ -13,3 +13,4 @@ def hello_world():
 @app.route("/init")
 def init_vector():
     search.init_vector()
+    return "finished!"

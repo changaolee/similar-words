@@ -30,7 +30,7 @@ class Search(object):
             self.milvus.flush()
         self._create_collection()
 
-        with open("./Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
+        with open("/app/Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
             for line in f:
                 word, embedding = line.split(" ", 1)
                 embedding = embedding.split()
