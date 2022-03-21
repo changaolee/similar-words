@@ -37,8 +37,9 @@ milvus-standalone   /tini -- milvus run standalone   Up             0.0.0.0:1953
 ```
 $ docker build -t similar_words:latest .
 $ docker run -d -p 5000:5000 \
-  -v /home/acs/www/similar_words:/app \
-  -v /home/acs/Tencent_AILab_ChineseEmbedding.txt:/app/Tencent_AILab_ChineseEmbedding.txt \
+  -v (pwd)/similar_words:/app \
+  -v (pwd)/Tencent_AILab_ChineseEmbedding.txt:/app/Tencent_AILab_ChineseEmbedding.txt \
+  --network milvus \
   --name similar_words similar_words:latest
 ```
 

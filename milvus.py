@@ -14,7 +14,7 @@ class Milvus(object):
 
     def __init__(self):
         connections.connect("default", host="standalone", port="19530")
-        # self._load_collection()
+        self._load_collection()
 
     def _load_collection(self):
         if not utility.has_collection(self._collection_name):
@@ -43,7 +43,7 @@ class Milvus(object):
     def init_vector(self):
         if utility.has_collection(self._collection_name):
             utility.drop_collection(self._collection_name)
-        self._load_collection()
+            self._load_collection()
         with open("./Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
             for line in f:
                 word, embedding = line.split(" ", 1)
