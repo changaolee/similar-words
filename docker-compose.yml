@@ -41,6 +41,7 @@ services:
     depends_on:
       - "etcd"
       - "minio"
+    restart: always
 
   similar_words:
     container_name: similar_words
