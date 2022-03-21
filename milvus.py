@@ -13,7 +13,7 @@ class Milvus(object):
     _collection_name = "word_vector"
 
     def __init__(self):
-        connections.connect("default", host="localhost", port="19530")
+        connections.connect("default", host="standalone", port="19530")
         self._load_collection()
 
     def _load_collection(self):

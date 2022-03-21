@@ -48,6 +48,8 @@ services:
     volumes:
       - /home/acs/www/similar_words:/app
       - /home/acs/Tencent_AILab_ChineseEmbedding.txt:/app/Tencent_AILab_ChineseEmbedding.txt
+    links:
+      - standalone
     depends_on:
       - "standalone"
 
