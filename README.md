@@ -29,7 +29,7 @@ $ sudo docker run -d --name milvus_cpu_1.1.1 \
     -v (pwd)/similar_words/milvus/logs:/var/lib/milvus/logs \
     -v (pwd)/similar_words/milvus/wal:/var/lib/milvus/wal \
     --network milvus \
-    --name milvus_cpu_1.1.1 \
+    --name similar_words_milvus \
     milvusdb/milvus:1.1.1-cpu-d061621-330cc6
 ```
 

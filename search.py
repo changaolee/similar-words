@@ -3,7 +3,7 @@ import redis
 
 
 class Search(object):
-    _HOST = "milvus_cpu_1.1.1"
+    _HOST = "similar_words_milvus"
     _PORT = "19530"
 
     _REDIS_HOST = "similar_words_redis"
@@ -33,9 +33,27 @@ class Search(object):
         ivf_param = {'nlist': 16384}
         self.milvus.create_index(self._COLLECTION_NAME, IndexType.IVF_FLAT, ivf_param)
 
-    def _add_idx_word_map(self, idx: int, word: str):
-        self.db.hset(self._ID_TO_WORD_KEY, idx, word)
-        self.db.hset(self._WORD_TO_ID_KEY, word, idx)
+    def _add_ids_words_map(self, ids: list, words: list):
+        self.db.hset(self._ID_TO_WORD_KEY, mapping=dict(zip(ids, words)))
+        self.db.hset(self._WORD_TO_ID_KEY, mapping=dict(zip(words, ids)))
+
+    def _get_words_vector(self, words: str):
+        ids = self.db.hmget(self._WORD_TO_ID_KEY, words)
+        _, vectors = self.milvus.get_entity_by_id(collection_name=self._COLLECTION_NAME, vector_id=ids)
+        return vectors
+
+    def _ids_to_words(self, ids: list):
+        return self.db.hmget(self._ID_TO_WORD_KEY, ids)
+
+    def _batch_add_vector(self, ids, words, vectors):
+        # 添加 id 和单词映射关系
+        self._add_ids_words_map(ids, words)
+
+        # 插入词向量
+        self.milvus.insert(
+            collection_name=self._COLLECTION_NAME,
+            records=vectors,
+            ids=ids)
 
     def init_vector(self):
         # collection 存在则删除后创建
@@ -47,24 +65,39 @@ class Search(object):
         self._create_collection()
 
         with open("/app/Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
-            idx = 0
+            idx, ids, words, vectors = 0, [], [], []
             for line in f:
                 word, embedding = line.split(" ", 1)
                 embedding = embedding.split()
                 if len(embedding) != 200:
                     continue
 
-                # 添加 id 和单词映射关系
-                self._add_idx_word_map(idx, word)
-
-                # 插入词向量
-                embedding = list(map(float, embedding))
-                self.milvus.insert(collection_name=self._COLLECTION_NAME, records=[embedding], ids=[idx])
-
+                ids.append(idx)
+                words.append(word)
+                vectors.append(list(map(float, embedding)))
                 idx += 1
+
+                if len(ids) > 100:
+                    self._batch_add_vector(ids, words, vectors)
+                    ids, words, vectors = [], [], []
+
+        if len(ids):
+            self._batch_add_vector(ids, words, vectors)
 
         # 导入后创建索引
         self._create_index()
 
-    def query_vector(self):
-        pass
+    def query_word(self, word: str, top_k: int):
+        [vector] = self._get_words_vector([word])
+        search_params = {'nprobe': 16}
+        _, results = self.milvus.search(
+            collection_name=self._COLLECTION_NAME,
+            query_records=[vector],
+            top_k=top_k,
+            params=search_params)
+        ids = []
+        for raw_result in results:
+            for result in raw_result:
+                ids.append(result.id)
+        words = self._ids_to_words(ids)
+        return words
