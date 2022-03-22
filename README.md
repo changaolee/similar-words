@@ -61,8 +61,8 @@ $ sudo docker run -d \
 ### 3. 启动相似词搜索服务
 
 ```
-$ docker build -t similar_words:latest .
-$ docker run -d \
+$ sudo docker build -t similar_words:latest .
+$ sudo docker run -d \
   -p 5000:5000 \
   -v (pwd)/similar_words:/app \
   -v (pwd)/Tencent_AILab_ChineseEmbedding.txt:/app/Tencent_AILab_ChineseEmbedding.txt \
