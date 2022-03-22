@@ -71,11 +71,11 @@ $ sudo docker run -d \
 ### 4. 导入腾讯中文词向量
 
 ```
-$ curl 127.0.0.1:5000/init
+$ curl "127.0.0.1:5000/init"
 ```
 
 ### 5. 相似词搜索
 
 ```
-
+$ curl -d '{"word": "测试", "top_k": 100}' -H "Content-Type: application/json" -X POST "127.0.0.1:5000/similar_word"
 ```

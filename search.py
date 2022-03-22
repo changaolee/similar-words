@@ -44,7 +44,7 @@ class Search(object):
         return vectors
 
     def _ids_to_words(self, ids: list):
-        return list(map(lambda x: x.decode("utf-8"), self.db.hmget(self._ID_TO_WORD_KEY, ids)))
+        return list(map(lambda x: x.decode("utf-8"), self.db.hmget(self._ID_TO_WORD_KEY, ids))) if ids else []
 
     def _batch_add_vector(self, ids, words, vectors):
         # 添加 id 和单词映射关系
