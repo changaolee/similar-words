@@ -63,10 +63,6 @@ class Search(object):
 
                 idx += 1
 
-                # todo: test
-                if idx > 100:
-                    break
-
         # 导入后创建索引
         self._create_index()
 
