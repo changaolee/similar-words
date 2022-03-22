@@ -6,6 +6,9 @@ class Search(object):
     _HOST = "milvus_cpu_1.1.1"
     _PORT = "19530"
 
+    _REDIS_HOST = "similar_words_redis"
+    _REDIS_PORT = 6379
+
     _VECTOR_DIM = 200
     _INDEX_FILE_SIZE = 1024
     _COLLECTION_NAME = "word_vector"
@@ -15,7 +18,7 @@ class Search(object):
 
     def __init__(self):
         self.milvus = Milvus(host=self._HOST, port=self._PORT)
-        self.db = redis.StrictRedis(host="localhost", port=6379)
+        self.db = redis.StrictRedis(host=self._REDIS_HOST, port=self._REDIS_PORT)
 
     def _create_collection(self):
         param = {
