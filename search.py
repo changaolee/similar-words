@@ -58,6 +58,7 @@ class Search(object):
                 self._add_idx_word_map(idx, word)
 
                 # 插入词向量
+                embedding = list(map(float, embedding))
                 self.milvus.insert(collection_name=self._COLLECTION_NAME, records=[embedding], ids=[idx])
 
                 idx += 1
