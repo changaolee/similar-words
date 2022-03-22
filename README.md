@@ -47,7 +47,18 @@ $ sudo docker ps
 $ sudo docker logs milvus_cpu_1.1.1
 ```
 
-### 2. 启动相似词搜索服务
+### 2. 启动 Redis Docker 容器
+
+```
+$ sudo docker pull redis:latest
+$ sudo [docker run -d \
+  -p 16379:6379 \
+  --network milvus \
+  --name similar_words_redis \
+  redis:latest]()
+```
+
+### 3. 启动相似词搜索服务
 
 ```
 $ docker build -t similar_words:latest .
