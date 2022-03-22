@@ -31,7 +31,7 @@ class Search(object):
 
     def _create_index(self):
         ivf_param = {'nlist': 1024}
-        self.milvus.create_index(self._COLLECTION_NAME, IndexType.IVF_FLAT, ivf_param)
+        self.milvus.create_index(self._COLLECTION_NAME, IndexType.IVF_SQ8, ivf_param)
 
     def _add_ids_words_map(self, ids: list, words: list):
         self.db.hset(self._ID_TO_WORD_KEY, mapping=dict(zip(ids, words)))
