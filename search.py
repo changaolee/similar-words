@@ -64,6 +64,9 @@ class Search(object):
             self.milvus.flush()
         self._create_collection()
 
+        # 创建索引
+        self._create_index()
+
         with open("/app/Tencent_AILab_ChineseEmbedding.txt", "r", encoding="utf-8") as f:
             idx, ids, words, vectors = 0, [], [], []
             for line in f:
@@ -77,15 +80,12 @@ class Search(object):
                 vectors.append(list(map(float, embedding)))
                 idx += 1
 
-                if len(ids) > 100:
+                if len(ids) > 1000:
                     self._batch_add_vector(ids, words, vectors)
                     ids, words, vectors = [], [], []
 
         if len(ids):
             self._batch_add_vector(ids, words, vectors)
-
-        # 导入后创建索引
-        self._create_index()
 
     def query_word(self, word: str, top_k: int):
         [vector] = self._get_words_vector([word])
