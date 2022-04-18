@@ -37,8 +37,10 @@ class Search(object):
         self.db.hset(self._ID_TO_WORD_KEY, mapping=dict(zip(ids, words)))
         self.db.hset(self._WORD_TO_ID_KEY, mapping=dict(zip(words, ids)))
 
-    def _get_words_vector(self, words: str):
+    def _get_words_vector(self, words: list):
         ids = self.db.hmget(self._WORD_TO_ID_KEY, words)
+        if not ids:
+            return []
         ids = list(map(int, ids))
         _, vectors = self.milvus.get_entity_by_id(collection_name=self._COLLECTION_NAME, ids=ids)
         return vectors
@@ -90,6 +92,8 @@ class Search(object):
 
     def query_word(self, word: str, top_k: int):
         [vector] = self._get_words_vector([word])
+        if not vector:
+            return []
         search_params = {'nprobe': 16}
         _, results = self.milvus.search(
             collection_name=self._COLLECTION_NAME,
